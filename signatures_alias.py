@@ -4,22 +4,21 @@ from httplib2 import Http
 from google.oauth2 import service_account
 
 #creating the values to insert to theuser
-DATA = {'signature': "WASAMARA LA YUCA \n\nhecho con gmail api"}
+DATA = {'signature': "Test Signature"}
 
 SCOPES = ["https://www.googleapis.com/auth/gmail.settings.basic", "https://www.googleapis.com/auth/gmail.modify", "https://www.googleapis.com/auth/gmail.send", "https://mail.google.com" ]
 #declaring json file for service account
-SERVICE_ACCOUNT_FILE = 'credentials3.json'
-#obtain credentials from the json
+SERVICE_ACCOUNT_FILE = 'credentials.json'
+#obtain credentials from the json from https://developers.google.com/identity/protocols/oauth2/service-account#authorizingrequests
 credentials = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
-#using the with_subject Method to pass on the credentials to the impersonated user
-delegated_credentials = credentials.with_subject("rene@support-domain26.info")
+delegated_credentials = credentials.with_subject("user@domain")
 #Making the call to the API
 GMAIL = discovery.build('gmail', 'v1', credentials = delegated_credentials)
 
-addresses = GMAIL.users().settings().sendAs().list(userId="rene@support-domain26.info", fields='sendAs(isPrimary, sendAsEmail)').execute().get('sendAs')
+addresses = GMAIL.users().settings().sendAs().list(userId="user@domain", fields='sendAs(isPrimary, sendAsEmail)').execute().get('sendAs')
 
 for address in addresses:
     if address.get('isPrimary'):
         break
 
-rsp = GMAIL.users().settings().sendAs().patch(userId='rene@support-domain26.info', sendAsEmail = address['send'], body=DATA).execute()
+rsp = GMAIL.users().settings().sendAs().patch(userId='user@domain', sendAsEmail = address['send'], body=DATA).execute()
