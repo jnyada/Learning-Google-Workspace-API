@@ -8,7 +8,7 @@ SCOPES = ["https://www.googleapis.com/auth/drive"]
 
 SERVICE_ACCOUNT_FILE = 'credentials.json'
 credentials = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes= SCOPES)
-delegated_creds = credentials.with_subject("melendezj@support-domain26.info")
+delegated_creds = credentials.with_subject("user@domain")
 
 service = build('drive', 'v3', credentials = delegated_creds)
 
