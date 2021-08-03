@@ -16,10 +16,14 @@ delegated_credentials = credentials.with_subject("user@domain")
 #Making the call to the API
 GMAIL = discovery.build('gmail', 'v1', credentials = delegated_credentials)
 
+#This is part is optional to obtain the primary email address of a user.
 addresses = GMAIL.users().settings().sendAs().list(userId="user@domain", fields='sendAs(isPrimary, sendAsEmail)').execute().get('sendAs')
 
 for address in addresses:
     if address.get('isPrimary'):
         break
 
-rsp = GMAIL.users().settings().sendAs().patch(userId='user@domain', sendAsEmail = address['send'], body=DATA).execute()
+rsp = GMAIL.users().settings().sendAs().patch(userId='user@domain', sendAsEmail = address['sendAsEmail'], body=DATA).execute()
+#If you exclude the addresses part, change this code for the following:
+#rsp = GMAIL.users().settings().sendAs().patch(userId='user@sdomain', sendAsEmail = 'user_or_alias@domain', body=DATA).execute()
+#The SendAsEmail is the address you are setting the signature for, it can be the same as the userId or another Alias
