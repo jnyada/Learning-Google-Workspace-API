@@ -1,3 +1,4 @@
 # learning
 This is just me trying to learn Python
-I work with developer support for Google Workspace so I have to learn this and eventually master it
+
+This basic codes are designed to connect to Google Workspace product via Google APIs. For documentation on the API calls made check https://developers.google.com/apis-explorer
