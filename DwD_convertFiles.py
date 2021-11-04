@@ -15,7 +15,7 @@ SERVICE_ACCOUNT_FILE = 'credentialsb.json'
 #obtain credentials from the json
 credentials = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
 #using the with_subject Method to pass on the credentials to the impersonated user
-delegated_credentials = credentials.with_subject("yadatest@support-domain26.info")
+delegated_credentials = credentials.with_subject("user@domain.com") #Replace with the target user account email address
 #Making the call to the API
 service = build('drive', 'v3', credentials=delegated_credentials)
 
