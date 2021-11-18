@@ -15,23 +15,25 @@ SERVICE_ACCOUNT_FILE = 'credentialsb.json'
 #obtain credentials from the json
 credentials = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
 #using the with_subject Method to pass on the credentials to the impersonated user
-delegated_credentials = credentials.with_subject("user@domain.com")
+delegated_credentials = credentials.with_subject("user@domain.com") 
 #Making the call to the API
 service = build('drive', 'v3', credentials=delegated_credentials)
 
 
 #passing the file name and the destination format, in this case Google Spreadsheet
 file_metadata = {
-                'name': 'test8',
-                'mimeType': 'application/vnd.google-apps.spreadsheet',
-                'parents' : ['folder id of the folder inside of a shared drive']
+                'name': 'test8', #file name when uploaded
+                'mimeType': 'application/vnd.google-apps.spreadsheet', #target format of the file
+                #'parents' : ['Id of the folder destination to upload the file']
+		# parents is an optional parameter, if not included the file will be uploaded the user's My Drive
+		# If uploading to a Shared Drive folder, make sure the impersonated user is a member of the Shared drive or the folder will not be found 
                 }
 
 #Declaring the source file, using the file Mimetype
 media = MediaFileUpload(
                      filename='test.xlsx', #name of the file, replacewith the file path and name
                       mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', # Declaring the file type using its mimetype 
-                     resumable=True,
+                     resumable=True,#type of upload can be: media, multipart or resumable, for more info check https://developers.google.com/drive/api/v3/manage-uploads
                      )
 
 #This is the actual upload of the file 
