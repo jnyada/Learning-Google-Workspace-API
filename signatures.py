@@ -14,6 +14,7 @@ def targets():
 
     results = service.users().list(customer='customer_id', maxResults=10, orderBy= 'email',query='String').execute()
     #the query is optional
+    #If you want to search for users under an specific OU use: query='orgUnitPath=/Path' for String, this will return all the users under that OU
     users = results.get('users', [])
     for user in users:
         targets.append(u'{0}'.format(user['primaryEmail']))
