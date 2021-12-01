@@ -13,6 +13,7 @@ def targets():
     service = discovery.build('admin', 'directory_v1', credentials=creds)
 
     results = service.users().list(customer='customer_id', maxResults=10, orderBy= 'email',query='String').execute()
+    #'customer' can be replaced by 'domain'. For more info check https://developers.google.com/admin-sdk/directory/reference/rest/v1/users/list?apix_params#query-parameters 
     #the query is optional
     #If you want to search for users under an specific OU use: query='orgUnitPath=/Path' for String, this will return all the users under that OU
     users = results.get('users', [])
