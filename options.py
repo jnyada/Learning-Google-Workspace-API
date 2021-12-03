@@ -10,7 +10,8 @@ def main():
     print("1 -> List All Users (Name and Primary Email)")
     print("2 -> List all users' Email Aliases")
     print("3 -> List Available attributes ")
-    print("4 -> Exit ")
+    print("4 -> List Super Admins ")
+    print("5 -> Exit")
     x = int(input("Choose An option: "))
     if x == 1: 
         users = get_users()
