@@ -81,8 +81,7 @@ def list_users(users):
 def aliases(users):    
     for user in users:
         print(user['primaryEmail'])
-        keyname = 'aliases'
-        if keyname in user:
+        if 'aliases' in user:
             print(user['aliases'])
         else:
             print("User has no aliases")
