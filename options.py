@@ -54,7 +54,8 @@ def main():
 
 def get_users():
     
-    SCOPES = ['https://www.googleapis.com/auth/admin.directory.user', 'https://www.googleapis.com/auth/admin.directory.user.readonly', 'https://www.googleapis.com/auth/cloud-platform']
+    SCOPES = ['https://www.googleapis.com/auth/admin.directory.user', 'https://www.googleapis.com/auth/admin.directory.user.readonly', \
+	      'https://www.googleapis.com/auth/cloud-platform']
     SERVICE_ACCOUNT_FILE= 'credentials.json'
     credentials = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
     creds = credentials.with_subject("admin@domain.com")
