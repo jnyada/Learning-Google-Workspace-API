@@ -80,12 +80,10 @@ def list_users(users):
 
 def aliases(users):    
     for user in users:
-        print(user['primaryEmail'])
-        keyname = 'aliases'
-        if keyname in user:
-            print(user['aliases'])
-        else:
-            print("User has no aliases")
+        try:
+            print("\n user", user['primaryEmail'], "aliases: ", user['aliases'])
+        except:
+            print("\n user", user['primaryEmail'], " has no aliases")
             continue
     main()
     
