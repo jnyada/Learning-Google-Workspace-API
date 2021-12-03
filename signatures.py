@@ -1,8 +1,6 @@
 from __future__ import print_function
 from apiclient import discovery
-from google.auth import credentials
 from google.oauth2 import service_account
-from oauth2client.client import SERVICE_ACCOUNT
 
 def targets():
     targets = []

@@ -1,7 +1,5 @@
 from __future__ import print_function
-import os.path
 from googleapiclient.discovery import build
-from httplib2 import Http
 from google.oauth2 import credentials, service_account
 
 SCOPES = ["https://www.googleapis.com/auth/drive"]

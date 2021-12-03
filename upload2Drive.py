@@ -1,5 +1,4 @@
 from __future__ import print_function
-import os.path
 from apiclient import discovery
 from googleapiclient.discovery import build
 from google.oauth2 import service_account
