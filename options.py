@@ -24,6 +24,9 @@ def main():
         users = get_users()
         get_keys(users)
     elif x == 4:
+        users = get_users()
+        get_SAdmins(users)
+    elif x == 5:
         print("Bye!")
     else:
         print("Wrong Input try again")
@@ -72,6 +75,12 @@ def has_2sv(users):
     for user in users:
         print(user['primaryEmail'])
         print(user['isEnrolledIn2Sv'])
+    main()
+
+def get_SAdmins(users):
+    for user in users:
+        if user['isAdmin'] == True:
+            print(user['primaryEmail'])
     main()
 
 if __name__ == '__main__':
