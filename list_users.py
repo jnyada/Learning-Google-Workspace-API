@@ -1,7 +1,6 @@
 from __future__ import print_function
 from apiclient import discovery
 from google.oauth2 import service_account
-from oauth2client.client import SERVICE_ACCOUNT
 #This file was created to explain my current understanding of both Python and Google's API request and Response
 
 def main():
