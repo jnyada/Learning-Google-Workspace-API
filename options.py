@@ -6,12 +6,15 @@ from apiclient import discovery
 from google.oauth2 import service_account
 
 def main():
-    print("Available options:")
+    print("\nAvailable options:")
     print("1 -> List All Users (Name and Primary Email)")
     print("2 -> List all users' Email Aliases")
     print("3 -> List Available attributes ")
     print("4 -> List Super Admins ")
-    print("5 -> Exit")
+    print("5 -> List users with 2SV enabled ")
+    print("6 -> List users last login time ")
+    print("7 -> Remove change Password at next login flag")
+    print("0 -> Exit ")
     x = int(input("Choose An option: "))
     if x == 1: 
         users = get_users()
@@ -27,12 +30,26 @@ def main():
         users = get_users()
         get_SAdmins(users)
     elif x == 5:
+        users = get_users()
+        has_2sv(users)
+    elif x == 6:
+        users = get_users()
+        get_last_login(users)
+    elif x == 7:
+        users = get_users()
+        chg_pwd_nlogin(users)
+        '''elif y == '1':
+            z = input("Enter Email address: ")
+        else:
+            print("Wrong input")'''
+
+
+        
+    elif x == 0:
         print("Bye!")
     else:
         print("Wrong Input try again")
         main()
-
-        #has_2sv(users)
 
 
 def get_users():
@@ -73,8 +90,10 @@ def aliases(users):
     
 def has_2sv(users):
     for user in users:
-        print(user['primaryEmail'])
-        print(user['isEnrolledIn2Sv'])
+        if user['isEnrolledIn2Sv'] == True:
+            print(user['primaryEmail'])
+        else:
+            continue
     main()
 
 def get_SAdmins(users):
@@ -82,6 +101,29 @@ def get_SAdmins(users):
         if user['isAdmin'] == True:
             print(user['primaryEmail'])
     main()
+def get_last_login(users):
+    for user in users:
+        print(user['lastLoginTime'])
+
+def chg_pwd_nlogin(users):
+    #This is a WIP currently it changes  all users to False. Still working on passing a single user
+    # I need to learn about optional arguments 
+    SCOPES = ['https://www.googleapis.com/auth/admin.directory.user']
+    SERVICE_ACCOUNT_FILE= 'credentialsc.json'
+    credentials = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+    creds = credentials.with_subject("admin@domain.com")
+    service = discovery.build('admin', 'directory_v1', credentials=creds)
+
+    for user in users:
+        if user['changePasswordAtNextLogin'] == True:
+            print(user['primaryEmail'], user['changePasswordAtNextLogin'])
+            rsp = service.users().patch(userKey = user['id'], body= { "changePasswordAtNextLogin" : False}).execute()
+
+            print(rsp['primaryEmail'], "is now", rsp['changePasswordAtNextLogin'])
+        else:
+            continue
+    print("Done!")
+    main()    
 
 if __name__ == '__main__':
     main()
