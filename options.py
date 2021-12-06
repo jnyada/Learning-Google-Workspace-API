@@ -84,6 +84,7 @@ def aliases(users):
             print("\n user", user['primaryEmail'], "aliases: ", user['aliases'])
         except:
             print("\n user", user['primaryEmail'], " has no aliases")
+
             continue
     main()
     
